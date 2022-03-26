@@ -1,0 +1,488 @@
+<title>
+  Johnny Chabin
+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto&family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  :root{
+    --bg: #080808;
+    --red: #ff2f1c;
+  }
+  *{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  body{
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #EEE;
+  }
+  .tfont{
+    font: 10vmin "IBM Plex Mono", monospace;
+    color: white;
+  }
+  .sfont{
+    font: 6vmin "Roboto Slab", serif;
+    color: white;
+  }
+  .bfont{
+    font: 3vmin "Roboto", serif;
+    color: white;
+  }
+  #title{
+    position: absolute;
+    display: inline-block;
+    top: 50vh;
+    left: 50vw;
+    padding-left: 2vmin;
+    padding-right: 2vmin;
+    padding-bottom: 1vmin;
+    background: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  #subtitle{
+    position: absolute;
+    display: inline-block;
+    bottom: -30vmin;
+    right: 3vmin;
+    padding: 2vmin;
+    background: white;
+    text-align: center;
+  }
+  #imgbg{
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  #scrollalert{
+    position: absolute;
+    top: 50vh;
+    transform: translateY(-50%);
+    right: 5vmin;
+    overflow: visible;
+  }
+  @keyframes arrowflash{
+    10%{ opacity: 0; }
+    50%{ opacity: 1; }
+    90%{ opacity: 0; }
+  }
+  .sarrow{
+    color: white;
+    font-size: 15vmin;
+    display: block;
+    opacity: 0;
+  }
+  #loading{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: var(--bg);
+    top: -100vh;
+    left: 0;
+    transition: top .2s;
+    z-index: 2;
+  }
+  #loading.active{
+    top: 0;
+  }
+  .pgdiv{
+    background: var(--bg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .pgdiv.halves{
+    display: flex;
+    gap: 5vmin;
+  }
+  .half{
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 5vmin;
+    position: relative;
+  }
+  .half.left{
+    text-align: left;
+  }
+  .half.right{
+    text-align: right;
+  }
+  .half.left.pa{
+    padding-left: 20vmin;
+  }
+  .half.right.pa{
+    padding-right: 20vmin;
+  }
+  .bottom{
+    height: 100%;
+    position: relative;
+  }
+  .bchild{
+    position: absolute;
+    bottom: 0;
+  }
+  #d1{
+    background-image: url("lizards.png");
+  }
+  #d2{
+    background-image: url("asteroids.png");
+  }
+  #d3{
+    background-image: url("fractalrenderer.png");
+  }
+  #d4{
+    background-image: url("chess.png");
+  }
+  #d5{
+    background-image: url("amongus.png");
+  }
+  .obg{
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .button{
+    border: 1px solid white;
+    border-radius: 1vmin;
+    display: inline-block;
+    padding: 0.5vmin;
+    color: white;
+    font: 3vmin "Roboto", serif;
+    cursor: pointer;
+  }
+  .button:hover{
+    color: var(--bg);
+    background: white;
+  }
+  #links{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    background: var(--bg);
+    padding-left: 0.5vmin;
+    padding-right: 0.5vmin;
+    border-radius: 0 0 0 3vmin;
+    transition: padding-right .2s;
+  }
+  #links.small{
+    padding-right: 0;
+  }
+  .bubble{
+    display: inline-block;
+    margin: 1.5vmin;
+    width: 5vmin;
+    height: 5vmin;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: transform .2s, margin .2s, width .2s, height .2s;
+  }
+  .bubble:hover{
+    transform: scale(1.2);
+  }
+  .small > .bubble{
+    margin: 0.5vmin;
+  }
+  #git{
+    background-image: url("github.png");
+    border-radius: 100%;
+    background-color: #000;
+  }
+  #linkd{
+    background-image: url("linkedin.png");
+    border-radius: 10%;
+    background-color: #fff;
+  }
+  #newimg{
+    border-radius: 100%;
+    background-color: var(--red);
+    color: white;
+    text-align: center;
+    font: 4vmin "IBM Plex Mono", monospace;
+    overflow: hidden;
+  }
+  .hl{
+    color: var(--red);
+  }
+  a{
+    color: white !important;
+  }
+</style>
+
+<style id="vertical">
+  .pgdiv.halves{
+    flex-direction: column;
+  }
+  .half{
+    flex-basis: unset;
+  }
+  .pa{
+    padding: 5vmin !important;
+  }
+</style>
+
+<div class="tfont" id="title">JOHNNY_CHABIN</div>
+<div id="scrollalert">
+  <div class="sarrow fa">&#xf078;</div>
+  <div class="sarrow fa">&#xf078;</div>
+  <div class="sarrow fa">&#xf078;</div>
+  <div class="sarrow fa">&#xf078;</div>
+  <div class="sarrow fa">&#xf078;</div>
+</div>
+<div id="imgbg"></div>
+<div id="links">
+  <div class="bubble" id="git" onclick="window.open('https://github.com/jchabin')"></div>
+  <div class="bubble" id="linkd"></div>
+  <div class="bubble" id="newimg" onclick="sy = 0; dispImg()">?</div>
+</div>
+
+<div class="pgdiv halves" id="d0">
+  <div class="half left pa">
+    <div class="sfont">I'm Johnny, a Computer Science Senior at the University of Colorado, Boulder.</div>
+  </div>
+  <div class="half right pa">
+    <div class="bottom">
+      <div class="bchild">
+        <div class="sfont">Here are some neat projects I've made:</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pgdiv halves" id="d1">
+  <div class="half left obg">
+    <p class="sfont">Invisible Lizard Hunter</p>
+    <p class="bfont">
+      <br/>
+      A procedurally-generated survival game where the player fights against
+      chameleons. I made this over a few days in the summer; it uses
+      JavaScript canvas, procedurally generated enviroments, procedurally
+      animated enemies, and a state-machine AI. WASD to move, and click to
+      shoot.
+      <br/>
+      <br/>
+    </p>
+    <div class="button" onclick="window.open('https://jchabin.github.io/lizards')">Try it Here!</div>
+  </div>
+  <div class="half"></div>
+  <div class="half"></div>
+</div>
+
+<div class="pgdiv halves" id="d2">
+  <div class="half"></div>
+  <div class="half"></div>
+  <div class="half right obg">
+    <p class="sfont">Multiplayer Asteroids</p>
+    <p class="bfont">
+      <br/>
+      An Asteroids-inspired multiplayer game, it is played with one host
+      computer, and players joining on their phones. The phones are used as
+      controllers, and the game is displayed on the host computer screen. This
+      project uses FireBase Realtime Database for its backend, which I chose
+      <s>because it's free</s> because it has a good library for interfacing
+      with web applications.
+      <br/>
+      <br/>
+    </p>
+    <div class="button" onclick="window.open('https://jchabin.github.io/asteroids')">Try it Here!</div>
+  </div>
+</div>
+
+<div class="pgdiv halves" id="d3">
+  <div class="half left obg">
+    <p class="sfont">OpenGL Fractal Renderer</p>
+    <p class="bfont">
+      <br/>
+      A rendering engine I wrote that runs entirely inside a shader, including
+      all geometry being entirely defined by distance fields, not by polygons.
+      It uses raymarching and an implementation of Monte Carlo rendering to
+      create a very realistic image. The pictures at the top of this website
+      were made using versions of this engine; you can click the
+      <span class="hl">mysterious red button</span>
+      in the top-right of the page to see a new one!
+    </p>
+  </div>
+  <div class="half"></div>
+  <div class="half"></div>
+</div>
+
+<div class="pgdiv halves" id="d4">
+  <div class="half"></div>
+  <div class="half"></div>
+  <div class="half right obg">
+    <p class="sfont">Quantum Chess</p>
+    <p class="bfont">
+      <br/>
+      This was a small project I made that uses a similar approach to the
+      <a href="https://github.com/mxgmn/WaveFunctionCollapse">Wave Function Collapse</a>
+      algorithm. By hypothetically collapsing every possible identity of every
+      piece, it checks whether a possible resulting state exists. It is played
+      with two players at the same computer, and it does not yet automatically
+      determine checkmate.
+      <br/>
+      <br/>
+    </p>
+    <div class="button" onclick="window.open('https://jchabin.github.io/chess')">Try it Here!</div>
+  </div>
+</div>
+
+<div class="pgdiv halves" id="d5">
+  <div class="half left obg">
+    <p class="sfont">WebGL Multiplayer Shooter</p>
+    <p class="bfont">
+      <br/>
+      A simple shooter game I made wrote entirely using WebGL, and not THREEjs.
+      It uses the same server provider as the Asteroids game above, and similar
+      methods for interacting with it. The interesting aspect to this project is
+      that I used WebGL instructions directly to create my own OBJ loader,
+      instantiator, and renderer.
+      <br/>
+      <br/>
+    </p>
+    <div class="button" onclick="window.open('https://jchabin.github.io/webglshooter')">Try it Here!</div>
+  </div>
+  <div class="half"></div>
+  <div class="half"></div>
+</div>
+
+<div id="loading" class="active">
+</div>
+
+<script>
+
+  var imgData, sx = window.scrollX, sy = window.scrollY, lx = sx, ly = sy;
+  var imgbg = document.getElementById("imgbg"), loading = document.getElementById("loading"), title = document.getElementById("title");
+  title.xv = 0; title.yv = 0; title.x = 0; title.y = 0;
+  function dispImg(){
+    if(!imgData)
+      return;
+    i = imgData.splice(0, 1)[0];
+    imgbg.style.backgroundImage = `url("${i.src}")`;
+    imgData.push(i);
+  }
+
+  fetch("https://api.github.com/repos/jchabin/about/git/trees/main").then(e => e.json()).then(e => {
+    loading.className = "active";
+    imgData = e.tree.splice(1);
+
+    arr = [];
+    while(imgData.length){
+      arr.push(new Image());
+      arr[arr.length - 1].src = "https://jchabin.github.io/about/" + imgData.splice(Math.floor(Math.random() * imgData.length), 1)[0].path;
+    }
+
+    imgData = arr;
+
+    imgData[0].onload = function(){
+      loading.className = "";
+      // sx = 0; lx = 0;
+      // sy = 0; ly = 0;
+      // window.scrollTo(0, 0);
+      dispImg();
+    }
+  });
+
+  window.addEventListener("wheel", e => {
+    sx += e.deltaX; sy += e.deltaY;
+
+    e.preventDefault();
+  }, {passive: false});
+
+  window.onscroll = e => {
+    if(Math.abs(window.scrollX - lx) > 2 || Math.abs(window.scrollY - ly) > 2){
+      sx = window.scrollX;
+      sy = window.scrollY;
+    }
+  }
+
+  function anim(){
+    requestAnimationFrame(anim);
+    var scrollMax = getDim(document.body);
+    sx = Math.max(0, Math.min(scrollMax[0] - window.innerWidth + 10, sx));
+    sy = Math.max(0, Math.min(scrollMax[1] - window.innerHeight + 10, sy));
+
+    var ty = Math.round(sy / window.innerHeight) * window.innerHeight;
+    if((ty - sy) * (ty - window.scrollY) < 0)
+      sy = ty * 0.5 + sy * 0.5;
+
+    lx = window.scrollX * 0.9 + sx * 0.1 - Math.sign(window.scrollX - sx);
+    ly = window.scrollY * 0.9 + sy * 0.1 - Math.sign(window.scrollY - sy);
+
+    if(Math.abs(lx - sx) < 1) lx = sx;
+    if(Math.abs(ly - sy) < 1) ly = sy;
+
+    window.scrollTo(lx, ly);
+
+    title.x += title.xv;
+    title.y += title.yv;
+
+    title.xv = title.xv * 0.98;
+    title.yv = title.yv * 0.98;
+
+    if(title.x < (title.clientWidth - window.innerWidth) / 2){
+      title.x = (title.clientWidth - window.innerWidth) / 2;
+      title.xv = Math.abs(title.xv) * 0.8;
+    }
+    if(title.x > (window.innerWidth - title.clientWidth) / 2){
+      title.x = (window.innerWidth - title.clientWidth) / 2;
+      title.xv = -Math.abs(title.xv) * 0.8;
+    }
+    if(title.y < (title.clientHeight - window.innerHeight) / 2){
+      title.y = (title.clientHeight - window.innerHeight) / 2;
+      title.yv = Math.abs(title.yv) * 0.8;
+    }
+    if(title.y > (window.innerHeight - title.clientHeight) / 2){
+      title.y = (window.innerHeight - title.clientHeight) / 2;
+      title.yv = -Math.abs(title.yv) * 0.8;
+    }
+
+    title.style.transform = `translate(-50%, -50%) translate(${title.x}px, ${title.y}px)`;
+
+    document.getElementById("vertical").disabled = window.innerWidth > window.innerHeight * 3 / 2;
+
+    document.getElementById("links").className = sy < 10 ? "" : "small";
+  }
+  anim();
+
+  function getDim(e){
+    let d = e.getBoundingClientRect();
+    d = [d.right + window.scrollX, d.bottom + window.scrollY];
+    for(let c = 0; c < e.children.length; c++){
+      let r = getDim(e.children[c]);
+      d = [Math.max(r[0], d[0]), Math.max(r[1], d[1])];
+    }
+    return d;
+  }
+
+  var a = document.getElementsByClassName("sarrow");
+  for(var i = 0; i < a.length; i++)
+    a[i].style.animation = `arrowflash 2s ${2 + i / 5}s 3`;
+
+  title.onmousemove = function(e){
+    if(e.buttons % 2 == 1){
+      title.xv = e.movementX;
+      title.yv = e.movementY;
+    }
+  }
+</script>
