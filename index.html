@@ -67,13 +67,6 @@
     background: white;
     text-align: center;
   }
-  #imgbg{
-    width: 100vw;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
   #scrollalert{
     position: absolute;
     top: 50vh;
@@ -107,11 +100,11 @@
   }
   .pgdiv{
     background: var(--bg);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
     height: 100vh;
+    width: 100vw;
     overflow: hidden;
+    backface-visibility: hidden;
+    clip-path: inset(0 0 0 0);
   }
   .pgdiv.halves{
     display: flex;
@@ -228,6 +221,16 @@
   a{
     color: white !important;
   }
+  .cover{
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
 </style>
 
 <style id="vertical">
@@ -242,18 +245,20 @@
   }
 </style>
 
-<div class="tfont" id="title">JOHNNY_CHABIN</div>
-<div id="scrollalert">
-  <div class="sarrow fa">&#xf078;</div>
-  <div class="sarrow fa">&#xf078;</div>
-  <div class="sarrow fa">&#xf078;</div>
-  <div class="sarrow fa">&#xf078;</div>
-  <div class="sarrow fa">&#xf078;</div>
+<div class="pgdiv">
+  <div class="tfont" id="title">JOHNNY_CHABIN</div>
+  <div id="scrollalert">
+    <div class="sarrow fa">&#xf078;</div>
+    <div class="sarrow fa">&#xf078;</div>
+    <div class="sarrow fa">&#xf078;</div>
+    <div class="sarrow fa">&#xf078;</div>
+    <div class="sarrow fa">&#xf078;</div>
+  </div>
+  <div id="imgbg" class="cover"></div>
 </div>
-<div id="imgbg"></div>
 <div id="links">
   <div class="bubble" id="git" onclick="window.open('https://github.com/jchabin')"></div>
-  <div class="bubble" id="linkd"></div>
+  <div class="bubble" id="linkd"  onclick="window.open('www.linkedin.com/in/johnny-chabin')"></div>
   <div class="bubble" id="newimg" onclick="sy = 0; dispImg()">?</div>
 </div>
 
@@ -268,9 +273,10 @@
       </div>
     </div>
   </div>
+  <div id="imgbg" class="cover"></div>
 </div>
 
-<div class="pgdiv halves" id="d1">
+<div class="pgdiv halves">
   <div class="half left obg">
     <p class="sfont">Invisible Lizard Hunter</p>
     <p class="bfont">
@@ -287,9 +293,10 @@
   </div>
   <div class="half"></div>
   <div class="half"></div>
+  <div id="d1" class="cover"></div>
 </div>
 
-<div class="pgdiv halves" id="d2">
+<div class="pgdiv halves">
   <div class="half"></div>
   <div class="half"></div>
   <div class="half right obg">
@@ -307,9 +314,10 @@
     </p>
     <div class="button" onclick="window.open('https://jchabin.github.io/asteroids')">Try it Here!</div>
   </div>
+  <div id="d2" class="cover"></div>
 </div>
 
-<div class="pgdiv halves" id="d3">
+<div class="pgdiv halves">
   <div class="half left obg">
     <p class="sfont">OpenGL Fractal Renderer</p>
     <p class="bfont">
@@ -325,9 +333,10 @@
   </div>
   <div class="half"></div>
   <div class="half"></div>
+  <div id="d3" class="cover"></div>
 </div>
 
-<div class="pgdiv halves" id="d4">
+<div class="pgdiv halves">
   <div class="half"></div>
   <div class="half"></div>
   <div class="half right obg">
@@ -345,9 +354,10 @@
     </p>
     <div class="button" onclick="window.open('https://jchabin.github.io/chess')">Try it Here!</div>
   </div>
+  <div id="d4" class="cover"></div>
 </div>
 
-<div class="pgdiv halves" id="d5">
+<div class="pgdiv halves">
   <div class="half left obg">
     <p class="sfont">WebGL Multiplayer Shooter</p>
     <p class="bfont">
@@ -364,12 +374,14 @@
   </div>
   <div class="half"></div>
   <div class="half"></div>
+  <div id="d5" class="cover"></div>
 </div>
 
 <div id="loading" class="active">
 </div>
 
 <script>
+  const mobile = navigator.userAgent.match("Mobile")!=null||navigator.userAgent.match("Linux;")!=null;
 
   var imgData, sx = window.scrollX, sy = window.scrollY, lx = sx, ly = sy;
   var imgbg = document.getElementById("imgbg"), loading = document.getElementById("loading"), title = document.getElementById("title");
@@ -403,20 +415,8 @@
     }
   });
 
-  window.addEventListener("wheel", e => {
-    sx += e.deltaX; sy += e.deltaY;
-
-    e.preventDefault();
-  }, {passive: false});
-
-  window.onscroll = e => {
-    if(Math.abs(window.scrollX - lx) > 2 || Math.abs(window.scrollY - ly) > 2){
-      sx = window.scrollX;
-      sy = window.scrollY;
-    }
-  }
-
   function anim(){
+    console.log(window.innerHeight);
     requestAnimationFrame(anim);
     var scrollMax = getDim(document.body);
     sx = Math.max(0, Math.min(scrollMax[0] - window.innerWidth + 10, sx));
@@ -463,7 +463,22 @@
 
     document.getElementById("links").className = sy < 10 ? "" : "small";
   }
-  anim();
+  if(!mobile){
+    window.addEventListener("wheel", e => {
+      sx += e.deltaX; sy += e.deltaY;
+
+      e.preventDefault();
+    }, {passive: false});
+
+    window.onscroll = e => {
+      if(Math.abs(window.scrollX - lx) > 2 || Math.abs(window.scrollY - ly) > 2){
+        sx = window.scrollX;
+        sy = window.scrollY;
+      }
+    }
+
+    anim();
+  }
 
   function getDim(e){
     let d = e.getBoundingClientRect();
